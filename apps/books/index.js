@@ -7,7 +7,7 @@ var deasync = require("deasync");
 
 
 //define a alexa app
-var app = new alexa.app("books");
+var app = new alexa.app("amazingWorkz");
 //var app = chatskills.app("book");
 
 //goodread api keys
