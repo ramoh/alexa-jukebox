@@ -1,5 +1,5 @@
 # alexa-app-server
-some random stuff
+just it 
 An Alexa App (Skill) Server module using Node.js and the [alexa-app](https://www.npmjs.com/package/alexa-app) module.
 
 [![NPM](https://img.shields.io/npm/v/alexa-app-server.svg)](https://www.npmjs.com/package/alexa-app-server/)
