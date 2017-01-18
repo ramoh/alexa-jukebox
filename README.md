@@ -1,5 +1,4 @@
 # alexa-app-server
-just it
 An Alexa App (Skill) Server module using Node.js and the [alexa-app](https://www.npmjs.com/package/alexa-app) module.
 
 [![NPM](https://img.shields.io/npm/v/alexa-app-server.svg)](https://www.npmjs.com/package/alexa-app-server/)
@@ -9,7 +8,7 @@ An Alexa App (Skill) Server module using Node.js and the [alexa-app](https://www
 ## Installations
 
 
-Adding a new line - rajesh 
+Adding a new line
 ```
 npm install alexa-app-server --save
 ```

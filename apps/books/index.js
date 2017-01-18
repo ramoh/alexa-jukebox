@@ -51,9 +51,9 @@ function getBook(title) {
 
 app.launch(function(req, res) {
   res.say(
-    "Welcome Rajesh Mohanty. What book would you like to know about ? Please say get book ,followed by the title."
+    "Welcome to amazing workz app. What book would you like to know about ? Please say get book ,followed by the title."
   );
-  res.reprompt("Rajesh, please say get book,followed by the title");
+  res.reprompt("Please say get book,followed by the title");
   res.shouldEndSession(false);
 });
 
@@ -171,7 +171,7 @@ app.intent("AMAZON.CancelIntent", {
   },
   function(req, res) {
     console.log("++++cancel invoked");
-    res.say('Goodbye. Rajesh').shouldEndSession(true);
+    res.say('Goodbye from Amazing workz !').shouldEndSession(true);
   });
 
 app.intent("AMAZON.HelpIntent", {
@@ -190,7 +190,7 @@ app.intent('AMAZON.StopIntent', {
   'utterances': ['{quit|exit|thanks|bye|thank you}']
 }, function(req, res) {
   console.log("++++stop invoked");
-  res.say('Goodbye.Rajesh').shouldEndSession(true);
+  res.say('Goodbye from Amazing workz !').shouldEndSession(true);
 });
 
 module.exports = app;
