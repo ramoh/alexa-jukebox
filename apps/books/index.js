@@ -51,7 +51,7 @@ function getBook(title) {
 
 app.launch(function(req, res) {
   res.say(
-    "Welcome Rajesh. What book would you like to know about ? Please say get book ,followed by the title."
+    "Welcome Rajesh Mohanty. What book would you like to know about ? Please say get book ,followed by the title."
   );
   res.reprompt("Rajesh, please say get book,followed by the title");
   res.shouldEndSession(false);
@@ -74,7 +74,7 @@ app.intent("getBook", {
     'get {a|the|that|} book {-|TitleOne} {-|TitleTwo} {-|TitleThree} {-|TitleFour} {-|TitleFive}'
   ]
 }, function(req, res) {
-  console.log("++++++++++++++Get book invoked");
+  console.log("++++++++++++++Get book invoked ++++++++");
   var title = req.slot("TitleOne");
   console.log("+++ title: " + title);
   if (title) {
