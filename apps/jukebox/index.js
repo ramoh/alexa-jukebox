@@ -10,7 +10,7 @@ var googleSearch = new GoogleSearch({
   cx: '008044490165455818569:moplxs3eswg'
 });
 
-
+var cachedSongs = {};
 // search mp3forfun for the song and return the result
 function getStreamFromMp3Fun(songName) {
   var song = null;
@@ -68,7 +68,6 @@ app.launch(function(req, res) {
     "Welcome to jukebox. What would you like to listen ? Please say play ,followed by the song name"
   );
   res.reprompt("Please say play ,followed by the song name");
-  res.session("cachedSong", {});
   res.shouldEndSession(false);
 });
 
@@ -103,16 +102,16 @@ app.intent("playSong", {
     console.log("+++++ final title :" + title);
     // Trim trailing comma and whitespace.
     title = title.replace(/,\s*$/, '');
-    var map = req.session("cachedSong");
-    console.log("++++++cached object return" + map);
-    var song = map[title];
+
+    console.log("++++++cached object return" + cachedSongs);
+    var song = cachedSongs[title];
     console.log("+++ song is :" + song);
 
     if (song == undefined) {
       console.log("++++++Fetching the song from backend");
       song = getStreamFromMp3Fun(title);
-      map[title] = song;
-      res.session("cachedSong", map);
+      cachedSongs[title] = song;
+
     }
     if (!song.err && song.link) {
       message = "Ok. I found your song " + title;
