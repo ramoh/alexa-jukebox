@@ -68,7 +68,7 @@ app.launch(function(req, res) {
     "Welcome to jukebox. What would you like to listen ? Please say play ,followed by the song name"
   );
   res.reprompt("Please say play ,followed by the song name");
-  res.session("cachedSong", new Map());
+  res.session("cachedSong", {});
   res.shouldEndSession(false);
 });
 
@@ -104,14 +104,14 @@ app.intent("playSong", {
     // Trim trailing comma and whitespace.
     title = title.replace(/,\s*$/, '');
     var map = req.session("cachedSong");
-    console.log("++++++cached return" + map);
-    var song = map(title);
-
+    console.log("++++++cached object return" + map);
+    var song = map[title];
+    console.log("+++ song is :" + song);
 
     if (song == undefined) {
       console.log("++++++Fetching the song from backend");
       song = getStreamFromMp3Fun(title);
-      map.set(title, song);
+      map.[title] = song;
       res.session("cachedSong", map);
     }
     if (!song.err && song.link) {
