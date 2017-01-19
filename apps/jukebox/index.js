@@ -105,7 +105,8 @@ app.intent("playSong", {
     // Trim trailing comma and whitespace.
     title = title.replace(/,\s*$/, '');
     var song = cachedSongMap(title);
-    if (song === undefined) {
+    console.log("++++++cached return" + song);
+    if (song == undefined) {
       console.log("++++++Fetching the song from backend");
       song = getStreamFromMp3Fun(title);
       cachedSongMap(title, song);
