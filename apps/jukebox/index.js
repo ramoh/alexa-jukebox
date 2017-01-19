@@ -10,6 +10,7 @@ var googleSearch = new GoogleSearch({
   cx: '008044490165455818569:moplxs3eswg'
 });
 
+console.log("caching implemented");
 var cachedSongMap = new Map();
 
 // search mp3forfun for the song and return the result
@@ -94,9 +95,9 @@ app.intent("playSong", {
 
   if (title) {
     //capture additional words
-    var TitleTwo = req.slot('TitleTwo') || '';
-    var TitleThree = req.slot('TitleThree') || '';
-    var TitleFour = req.slot('TitleFour') || '';
+    var TitleTwo = req.slot('TitleTwo') || ' ';
+    var TitleThree = req.slot('TitleThree') || ' ';
+    var TitleFour = req.slot('TitleFour') || ' ';
 
     // Concatenate all words in the title provided.
     title += ' ' + TitleTwo + ' ' + TitleThree + ' ' + TitleFour + ' ';
