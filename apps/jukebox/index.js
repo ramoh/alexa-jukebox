@@ -59,8 +59,8 @@ function getStreamFromMp3Fun(songName) {
   return song;
 }
 
-var app = chatskills.app("jukebox");
-//var app = new alexa.app("jukebox");
+//var app = chatskills.app("jukebox");
+var app = new alexa.app("jukebox");
 
 app.launch(function(req, res) {
   res.say(
