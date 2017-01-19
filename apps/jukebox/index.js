@@ -113,6 +113,9 @@ app.intent("playSong", {
         offsetInMilliseconds: 0
       };
       res.audioPlayerPlayStream("REPLACE_ALL", stream);
+      res.shouldEndSession(false);
+      console.log("response returned");
+      return;
     } else {
       message = "Sorry ,I am not able to find your song";
     }
