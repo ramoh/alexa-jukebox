@@ -1,6 +1,6 @@
 var alexa = require("alexa-app");
-var chatskills = require("chatskills");
-var readLineSync = require("readline-sync");
+//var chatskills = require("chatskills");
+//var readLineSync = require("readline-sync");
 var xml2js = require("xml2js").parseString;
 var request = require("request");
 var deasync = require("deasync");
@@ -195,7 +195,7 @@ app.intent('AMAZON.StopIntent', {
 });
 
 module.exports = app;
-
+/*
 console.log(app.utterances());
 chatskills.launch(app);
 // Console client.
@@ -208,3 +208,4 @@ while (text.length > 0 && text != 'quit') {
     console.log(response);
   });
 }
+*/
