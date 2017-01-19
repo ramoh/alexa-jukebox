@@ -10,6 +10,8 @@ var googleSearch = new GoogleSearch({
   cx: '008044490165455818569:moplxs3eswg'
 });
 
+var cachedSongMap = new Map();
+
 // search mp3forfun for the song and return the result
 function getStreamFromMp3Fun(songName) {
   var song = null;
@@ -101,7 +103,11 @@ app.intent("playSong", {
     console.log("+++++ final title :" + title);
     // Trim trailing comma and whitespace.
     title = title.replace(/,\s*$/, '');
-    var song = getStreamFromMp3Fun(title);
+    var song = cachedSongMap(title);
+    if (song === undefined) {
+      console.log("++++++Fetching the song from backend");
+      song = getStreamFromMp3Fun(title);
+    }
     if (!song.err && song.link) {
       message = "Ok. I found your song " + title;
       var streamUrl = "https://amazingworkproxy.herokuapp.com/?fpath=" +
