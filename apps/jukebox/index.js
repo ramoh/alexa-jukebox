@@ -111,7 +111,7 @@ app.intent("playSong", {
     if (song == undefined) {
       console.log("++++++Fetching the song from backend");
       song = getStreamFromMp3Fun(title);
-      map.[title] = song;
+      map[title] = song;
       res.session("cachedSong", map);
     }
     if (!song.err && song.link) {
