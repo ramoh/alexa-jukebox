@@ -95,11 +95,9 @@ app.intent("playSong", {
     var TitleTwo = req.slot('TitleTwo') || '';
     var TitleThree = req.slot('TitleThree') || '';
     var TitleFour = req.slot('TitleFour') || '';
-    var TitleFive = req.slot('TitleFive') || '';
 
     // Concatenate all words in the title provided.
     title += ' ' + TitleTwo + ' ' + TitleThree + ' ' + TitleFour + ' ';
-    title += TitleFive;
     console.log("+++++ final title :" + title);
     // Trim trailing comma and whitespace.
     title = title.replace(/,\s*$/, '');
