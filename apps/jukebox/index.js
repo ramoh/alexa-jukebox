@@ -107,6 +107,7 @@ app.intent("playSong", {
     if (song === undefined) {
       console.log("++++++Fetching the song from backend");
       song = getStreamFromMp3Fun(title);
+      cachedSongMap(title, song);
     }
     if (!song.err && song.link) {
       message = "Ok. I found your song " + title;
