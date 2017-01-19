@@ -1,14 +1,14 @@
 var alexa = require("alexa-app");
-//var chatskills = require("chatskills");
-//var readLineSync = require("readline-sync");
+var chatskills = require("chatskills");
+var readLineSync = require("readline-sync");
 var xml2js = require("xml2js").parseString;
 var request = require("request");
 var deasync = require("deasync");
 
 
 //define a alexa app
-var app = new alexa.app("books");
-//var app = chatskills.app("book");
+//var app = new alexa.app("books");
+var app = chatskills.app("book");
 
 //goodread api keys
 var key = "b6Bc5VnBdjH1Mv2bZfUAIw";
@@ -36,13 +36,13 @@ function getBook(title) {
       });
     } else {
       book = {
-        error: error
+        err: error
       };
     }
   });
   //wait until we have result from aysnc chall
   deasync.loopWhile(function() {
-    return !book
+    return !book;
   });
   return book;
 }
@@ -76,9 +76,10 @@ app.intent("getBook", {
 }, function(req, res) {
   console.log("++++++++++++++Get book invoked ++++++++");
   var title = req.slot("TitleOne");
+  var message = "";
   console.log("+++ title: " + title);
   if (title) {
-    var message = "";
+
     //capture additional words
     var TitleTwo = req.slot('TitleTwo') || '';
     var TitleThree = req.slot('TitleThree') || '';
@@ -97,7 +98,7 @@ app.intent("getBook", {
       //respond to user
       message = "Ok. I found the book " + book.title;
     } else {
-      message = "Sorry ,I cannt seem to fint that book";
+      message = "Sorry ,I cannt seem to find that book";
     }
 
   } else {
@@ -194,7 +195,7 @@ app.intent('AMAZON.StopIntent', {
 });
 
 module.exports = app;
-/*
+
 console.log(app.utterances());
 chatskills.launch(app);
 // Console client.
@@ -207,4 +208,3 @@ while (text.length > 0 && text != 'quit') {
     console.log(response);
   });
 }
-*/

@@ -1,5 +1,5 @@
 ## Changelog
-
+do something here 
 ### 2.3.2 (Next)
 
 * [#28](https://github.com/alexa-js/alexa-app-server/pull/28): Moved to the [alexa-js organization](https://github.com/alexa-js) - [@dblock](https://github.com/dblock).
@@ -29,4 +29,3 @@
 ### 2.2.2 (Aug 18, 2015)
 
 * Changed `preRequest()` and `postRequest()` to allow them to return a `Promise` if they perform async operations - [@matt-kruse](https://github.com/matt-kruse).
-
