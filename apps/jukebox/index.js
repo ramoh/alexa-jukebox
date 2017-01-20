@@ -74,7 +74,7 @@ app.launch(function(req, res) {
   res.shouldEndSession(false);
 });
 
-app.intent("playMp3FunSong", {
+app.intent("playSong", {
     'slots': {},
     'utterances': ['play ']
   },
