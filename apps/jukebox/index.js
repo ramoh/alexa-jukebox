@@ -65,9 +65,9 @@ var app = new alexa.app("jukebox");
 
 app.launch(function(req, res) {
   res.say(
-    "Welcome to jukebox. What would you like to listen ? Please say play ,followed by the song name"
+    "Welcome to jukebox. What would you like to listen ? Please say find song ,followed by the song name"
   );
-  res.reprompt("Please say play ,followed by the song name");
+  res.reprompt("Please say find song ,followed by the song name");
 
   res.shouldEndSession(false);
 });
@@ -81,10 +81,10 @@ app.intent("playSong", {
     'TitleThree': 'TITLE',
     'TitleFour': 'TITLE'
   },
-  'utterances': ['play {-|TitleOne}',
-    'play {-|TitleOne} {-|TitleTwo}',
-    'play {-|TitleOne} {-|TitleTwo} {-|TitleThree}',
-    'play {-|TitleOne} {-|TitleTwo} {-|TitleThree} {-|TitleFour}'
+  'utterances': ['find song {-|TitleOne}',
+    'find song  {-|TitleOne} {-|TitleTwo}',
+    'find song {-|TitleOne} {-|TitleTwo} {-|TitleThree}',
+    'find song {-|TitleOne} {-|TitleTwo} {-|TitleThree} {-|TitleFour}'
   ]
 }, function(req, res) {
   console.log("++++++++++++++++++Play song invoked ++++++++++");
@@ -115,7 +115,8 @@ app.intent("playSong", {
 
     }
     if (!song.err && song.link) {
-      message = "Ok. I found your song " + title;
+      message = "Ok. I found your song " + title +
+        " .Please say play to play the song";
       var streamUrl = "https://amazingworkproxy.herokuapp.com/?fpath=" +
         song.link;
       var stream = {
@@ -124,10 +125,9 @@ app.intent("playSong", {
         expectedPreviousToken: "PREVIOUS_TOKEN",
         offsetInMilliseconds: 0
       };
-      res.audioPlayerPlayStream("REPLACE_ALL", stream);
-      res.shouldEndSession(false);
-      console.log("response returned");
-      return;
+      //  res.audioPlayerPlayStream("REPLACE_ALL", stream);
+      res.session("searchedSong", stream);
+
     } else {
       message = "Sorry ,I am not able to find your song";
     }
