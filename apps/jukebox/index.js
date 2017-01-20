@@ -72,7 +72,7 @@ app.launch(function(req, res) {
   res.shouldEndSession(false);
 });
 
-app.
+
 
 app.intent("playSong", {
   'slots': {
