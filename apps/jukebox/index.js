@@ -11,6 +11,7 @@ var googleSearch = new GoogleSearch({
 });
 
 var cachedSongs = {};
+
 // search mp3forfun for the song and return the result
 function getStreamFromMp3Fun(songName) {
   var song = null;
@@ -63,6 +64,7 @@ function getStreamFromMp3Fun(songName) {
 //var app = chatskills.app("jukebox");
 var app = new alexa.app("jukebox");
 
+
 app.launch(function(req, res) {
   res.say(
     "Welcome to jukebox. What would you like to listen ? Please say find ,followed by the song name"
@@ -74,7 +76,7 @@ app.launch(function(req, res) {
 
 
 
-app.intent("playSong", {
+app.intent("findSong", {
   'slots': {
     'TitleOne': 'TITLE',
     'TitleTwo': 'TITLE',
@@ -110,7 +112,7 @@ app.intent("playSong", {
     var song = cachedSongs[title];
     console.log("+++ song is :" + song);
 
-    if (song == undefined) {
+    if (song === undefined) {
       console.log("++++++Fetching the song from backend");
       song = getStreamFromMp3Fun(title);
       cachedSongs[title] = song;
@@ -141,14 +143,42 @@ app.intent("playSong", {
   res.say(message).shouldEndSession(false);
 });
 
-app.audioPlayer("PlaybackStarted",
+app.intent("playSong", {
+    "slots": {},
+    "utternaces": ["play"]
+  },
   function(req, res) {
-    console.log("++++Play song invoked");
+    console.log("++++play called");
     var stream = req.session("searchedSong");
-    console.log("+++++stream information" + stream);
+    console.log("++++straming to play++++" + stream);
     res.audioPlayerPlayStream("REPLACE_ALL", stream);
-    res.send();
+  });
 
+app.intent("AMAZON.PauseIntent", {
+    "slots": {},
+    "utterances": []
+  },
+  function(req, res) {
+    console.log("++++Pause invoked");
+    res.say('Puase from jukebox!').shouldEndSession(false);
+  });
+
+app.intent("AMAZON.ResumeIntent", {
+    "slots": {},
+    "utterances": []
+  },
+  function(req, res) {
+    console.log("++++Resume invoked");
+    res.say('Resume from jukebox!').shouldEndSession(false);
+  });
+
+app.intent("AMAZON.LoopOffIntent", {
+    "slots": {},
+    "utterances": []
+  },
+  function(req, res) {
+    console.log("++++Loop of invoked");
+    res.say('Loop of from jukebox!').shouldEndSession(false);
   });
 
 
@@ -180,11 +210,6 @@ app.intent('AMAZON.StopIntent', {
   res.say('Goodbye from jukebox!').shouldEndSession(true);
 });
 
-app.audioPlayer("PlaybackStarted", function(req, res) {
-
-
-
-});
 
 
 module.exports = app;
