@@ -82,6 +82,7 @@ app.intent("playSong", {
     console.log("++++play called");
     var stream = req.session("searchedSong");
     console.log("++++straming to play++++" + stream);
+    res.say("Playing humma humma song");
     res.audioPlayerPlayStream("REPLACE_ALL", stream);
   });
 
