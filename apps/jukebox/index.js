@@ -141,10 +141,7 @@ app.intent("playSong", {
   res.say(message).shouldEndSession(false);
 });
 
-app.audioPlayer("PlaybackStarted", {
-    "slots": {},
-    "utterances": ['{baja|play}']
-  },
+app.audioPlayer("PlaybackStarted",
   function(req, res) {
     console.log("++++Play song invoked");
     var stream = req.session("searchedSong");
