@@ -68,10 +68,11 @@ app.launch(function(req, res) {
     "Welcome to jukebox. What would you like to listen ? Please say play ,followed by the song name"
   );
   res.reprompt("Please say play ,followed by the song name");
+  res.card("Hello world!", "This is an example card");
   res.shouldEndSession(false);
 });
 
-
+app.
 
 app.intent("playSong", {
   'slots': {
