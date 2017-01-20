@@ -157,7 +157,7 @@ app.intent("findSong", {
 
 app.intent("AMAZON.PauseIntent", {
     "slots": {},
-    "utterances": ["pause"]
+    "utterances": []
   },
   function(req, res) {
     console.log("++++Pause invoked");
