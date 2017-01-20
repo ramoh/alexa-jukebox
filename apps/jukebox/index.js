@@ -156,7 +156,7 @@ app.intent("playSong", {
 
 app.intent("AMAZON.PauseIntent", {
     "slots": {},
-    "utterances": []
+    "utterances": ["pause"]
   },
   function(req, res) {
     console.log("++++Pause invoked");
