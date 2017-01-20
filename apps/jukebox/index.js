@@ -141,14 +141,18 @@ app.intent("playSong", {
   res.say(message).shouldEndSession(false);
 });
 
-app.audioPlayer("PlaybackStarted", function(req, res) {
-  console.log("++++Play song invoked");
-  var stream = req.session("searchedSong");
-  console.log("+++++stream information" + stream);
-  res.audioPlayerPlayStream("REPLACE_ALL", stream);
-  res.send();
+app.audioPlayer("PlaybackStarted", {
+    "slots": {},
+    "utterances": ['{baja|play}']
+  },
+  function(req, res) {
+    console.log("++++Play song invoked");
+    var stream = req.session("searchedSong");
+    console.log("+++++stream information" + stream);
+    res.audioPlayerPlayStream("REPLACE_ALL", stream);
+    res.send();
 
-});
+  });
 
 
 app.intent("AMAZON.CancelIntent", {
