@@ -141,6 +141,16 @@ app.intent("playSong", {
   res.say(message).shouldEndSession(false);
 });
 
+app.audioPlayer("PlaybackStarted", function(req, res) {
+  console.log("++++Play song invoked");
+  var stream = req.session("searchedSong");
+  console.log("+++++stream information" + stream);
+  res.audioPlayerPlayStream("REPLACE_ALL", stream);
+  res.send();
+
+});
+
+
 app.intent("AMAZON.CancelIntent", {
     "slots": {},
     "utterances": ['{quit|exit|thanks|bye|enough}']
@@ -167,6 +177,12 @@ app.intent('AMAZON.StopIntent', {
 }, function(req, res) {
   console.log("++++stop invoked");
   res.say('Goodbye from jukebox!').shouldEndSession(true);
+});
+
+app.audioPlayer("PlaybackStarted", function(req, res) {
+
+
+
 });
 
 
