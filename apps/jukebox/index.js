@@ -65,9 +65,9 @@ var app = new alexa.app("jukebox");
 
 app.launch(function(req, res) {
   res.say(
-    "Welcome to jukebox. What would you like to listen ? Please say jukebox find song ,followed by the song name"
+    "Welcome to jukebox. What would you like to listen ? Please say find ,followed by the song name"
   );
-  res.reprompt("Please say jukebox find song ,followed by the song name");
+  res.reprompt("Please say jukebox find ,followed by the song name");
 
   res.shouldEndSession(false);
 });
@@ -81,10 +81,10 @@ app.intent("playSong", {
     'TitleThree': 'TITLE',
     'TitleFour': 'TITLE'
   },
-  'utterances': ['jukebox find song {-|TitleOne}',
-    'jukebox find song  {-|TitleOne} {-|TitleTwo}',
-    'jukebox find song {-|TitleOne} {-|TitleTwo} {-|TitleThree}',
-    'jukebox find song {-|TitleOne} {-|TitleTwo} {-|TitleThree} {-|TitleFour}'
+  'utterances': ['find {-|TitleOne}',
+    'find  {-|TitleOne} {-|TitleTwo}',
+    'find {-|TitleOne} {-|TitleTwo} {-|TitleThree}',
+    'find {-|TitleOne} {-|TitleTwo} {-|TitleThree} {-|TitleFour}'
   ]
 }, function(req, res) {
   console.log("++++++++++++++++++Play song invoked ++++++++++");
@@ -100,6 +100,8 @@ app.intent("playSong", {
 
     // Concatenate all words in the title provided.
     title += ' ' + TitleTwo + ' ' + TitleThree + ' ' + TitleFour + ' ';
+    //harcoded for now
+    title = "humma humma";
     console.log("+++++ final title :" + title);
     // Trim trailing comma and whitespace.
     title = title.replace(/,\s*$/, '');
@@ -133,7 +135,7 @@ app.intent("playSong", {
     }
   } else {
     message =
-      "What would you like to listen ? Please say jukebox find song, followed by the song name ";
+      "What would you like to listen ? Please say jukebox find , followed by the song name ";
   }
 
   res.say(message).shouldEndSession(false);
@@ -154,7 +156,7 @@ app.intent("AMAZON.HelpIntent", {
 }, function(req, res) {
   console.log("++++help invoked");
   message =
-    "I can play a song for you .Please say jukebox find song ,followed by song name";
+    "I can play a song for you .Please say jukebox find  ,followed by song name";
 
   res.say(message).shouldEndSession(false);
 });
