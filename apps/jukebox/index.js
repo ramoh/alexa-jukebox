@@ -74,6 +74,16 @@ app.launch(function(req, res) {
   res.shouldEndSession(false);
 });
 
+app.intent("playMp3FunSong", {
+    'slots': {},
+    'utterances': ['play ']
+  },
+  function(req, res) {
+    console.log("++++play called");
+    var stream = req.session("searchedSong");
+    console.log("++++straming to play++++" + stream);
+    res.audioPlayerPlayStream("REPLACE_ALL", stream);
+  });
 
 
 app.intent("findSong", {
@@ -143,16 +153,7 @@ app.intent("findSong", {
   res.say(message).shouldEndSession(false);
 });
 
-app.intent("playSong", {
-    "slots": {},
-    "utternaces": ["play"]
-  },
-  function(req, res) {
-    console.log("++++play called");
-    var stream = req.session("searchedSong");
-    console.log("++++straming to play++++" + stream);
-    res.audioPlayerPlayStream("REPLACE_ALL", stream);
-  });
+
 
 app.intent("AMAZON.PauseIntent", {
     "slots": {},
