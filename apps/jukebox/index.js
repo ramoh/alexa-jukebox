@@ -80,10 +80,10 @@ app.intent("playSong", {
     'TitleThree': 'TITLE',
     'TitleFour': 'TITLE'
   },
-  'utterances': ['play the song {-|TitleOne}',
-    'play the song {-|TitleOne} {-|TitleTwo}',
-    'play the song {-|TitleOne} {-|TitleTwo} {-|TitleThree}',
-    'play the song {-|TitleOne} {-|TitleTwo} {-|TitleThree} {-|TitleFour}'
+  'utterances': ['play {-|TitleOne}',
+    'play {-|TitleOne} {-|TitleTwo}',
+    'play {-|TitleOne} {-|TitleTwo} {-|TitleThree}',
+    'play {-|TitleOne} {-|TitleTwo} {-|TitleThree} {-|TitleFour}'
   ]
 }, function(req, res) {
   console.log("++++++++++++++++++Play song invoked ++++++++++");
