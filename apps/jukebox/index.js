@@ -64,11 +64,11 @@ function getStreamFromMp3Fun(songName) {
 var app = new alexa.app("jukebox");
 
 app.launch(function(req, res) {
-  //  res.say(
-  //    "Welcome to jukebox. What would you like to listen ? Please say play ,followed by the song name"
-  //  );
-  //res.reprompt("Please say play ,followed by the song name");
-  res.card("Hello world!", "This is an example card");
+  res.say(
+    "Welcome to jukebox. What would you like to listen ? Please say play ,followed by the song name"
+  );
+  res.reprompt("Please say play ,followed by the song name");
+
   res.shouldEndSession(false);
 });
 
