@@ -209,6 +209,16 @@ app.intent("AMAZON.ResumeIntent", {
   },
   function(req, res) {
     console.log("++++Resume invoked");
+    var stream = req.session("searchedSong");
+    if (!stream) {
+      //setting hardCodedStream
+      stream = hardCodedStream;
+    }
+    console.log("++++straming to play++++");
+    console.log(stream);
+
+
+    res.audioPlayerPlayStream("REPLACE_ALL", stream);
     res.say('Resume from jukebox!').shouldEndSession(false);
   });
 
