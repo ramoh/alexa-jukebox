@@ -12,9 +12,8 @@ var googleSearch = new GoogleSearch({
 
 
 var hardCodedStream = {
-  url: "https://amazingworkproxy.herokuapp.com/?fpath=http://173.255.138.90:8137/listen.pls?sid=1",
-  token: "SOME_RANDOM_STRING",
-  expectedPreviousToken: "PREVIOUS_TOKEN",
+  url: "https://amazingworkproxy.herokuapp.com/?fpath=173.255.138.90:8137/listen.pls?sid=1",
+  token: "903243243b3423432423",
   offsetInMilliseconds: 0
 };
 
