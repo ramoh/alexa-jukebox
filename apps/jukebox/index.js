@@ -85,7 +85,7 @@ app.launch(function(req, res) {
 
 app.intent("playSong", {
     'slots': {},
-    'utterances': ['play ']
+    'utterances': ['jump']
   },
   function(req, res) {
     console.log("++++play song called called");
