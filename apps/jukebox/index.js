@@ -227,6 +227,7 @@ app.intent("AMAZON.CancelIntent", {
   },
   function(req, res) {
     console.log("++++cancel invoked");
+    response.audioPlayerStop();
     res.say('Goodbye from jukebox!').shouldEndSession(true);
   });
 
