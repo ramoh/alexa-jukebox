@@ -1,15 +1,22 @@
 var alexa = require("alexa-app");
 var request = require("request");
-var deasync = require("deasync");
-var cheerio = require("cheerio");
-var GoogleSearch = require('google-search');
-var googleSearch = new GoogleSearch({
-  key: 'AIzaSyDOAFXf7qmkOGS4DnWEJifUkFVFB22xspk',
-  cx: '008044490165455818569:moplxs3eswg'
-});
 
-//http://173.255.138.90:8137/listen.pls?sid=1
+var channels = {
+  "DC MIX": "173.255.138.90:8137/listen.pls?sid=1",
+  "DEFAULT": "173.255.138.90:8137/listen.pls?sid=1"
+};
 
+function getChannel(title) {
+  var channel = {};
+  var url = channels.title;
+  if (url) {
+    channel.link = url;
+  } else {
+    channel.err = true;
+  }
+
+  return channel;
+}
 
 var hardCodedStream = {
   url: "https://amazingworkproxy.herokuapp.com/?fpath=173.255.138.90:8137/listen.pls?sid=1",
@@ -17,89 +24,76 @@ var hardCodedStream = {
   offsetInMilliseconds: 0
 };
 
-var cachedSongs = {};
-
-// search mp3forfun for the song and return the result
-function getStreamFromMp3Fun(songName) {
-  var song = null;
-  var searchSite = "http://www.fullmp3fun.com/";
-
-  googleSearch.build({
-    q: songName,
-    num: 10, // Number of search results to return between 1 and 10, inclusive
-    siteSearch: searchSite // Restricts results to URLs from a specified site
-  }, function(error, response) {
-
-    if (!error) {
-      //console.log(response);
-      //console.log(response.searchInformation.totalResults != '0');
-      if (response.searchInformation.totalResults != '0') {
-        console.log("+++++++i found your song!!!!+++++");
-        var url = response.items[0].link;
-        console.log("++++++Here is the URL : " + response.items[0].link);
-        request(url, function(error, response, body) {
-          if (error) {
-            song = {
-              err: error
-            };
-          } else {
-            var $ = cheerio.load(body);
-            var downloadLink = searchSite + $(".dwnLink")[0].attribs.href;
-            //console.log(body);
-            console.log("Your download link is :" + downloadLink);
-            song = {
-              link: downloadLink
-            };
-          }
-        });
-      }
-    } else {
-      song = {
-        err: error
-      };
-    }
-  });
-
-
-  //wait until we have result from aysnc chall
-  deasync.loopWhile(function() {
-    return !song;
-  });
-  return song;
-}
-
 //var app = chatskills.app("jukebox");
 var app = new alexa.app("jukebox");
 
 
 app.launch(function(req, res) {
   res.say(
-    "Welcome to jukebox. What would you like to listen ? Please say find ,followed by the song name"
+    "Welcome to jukebox. What would you like to listen ? Please say find ,followed by the radio channel name"
   );
-  res.reprompt("Please say jukebox find ,followed by the song name");
-
+  res.reprompt("Please say find ,followed by the radio channel name");
   res.shouldEndSession(false);
 
 });
 
-app.intent("playSong", {
-    'slots': {},
-    'utterances': ['jump']
+app.intent("findChannel", {
+  'slots': {
+    'TitleOne': 'TITLE',
+    'TitleTwo': 'TITLE',
+    'TitleThree': 'TITLE',
+    'TitleFour': 'TITLE'
   },
-  function(req, res) {
-    console.log("++++play song called called");
-    var stream = req.session("searchedSong");
-    if (!stream) {
-      //setting hardCodedStream
-      stream = hardCodedStream;
-    }
-    console.log("++++straming to play++++");
-    console.log(stream);
-    res.say("Playing humma humma song");
+  'utterances': ['find {-|TitleOne}',
+    'find  {-|TitleOne} {-|TitleTwo}',
+    'find {-|TitleOne} {-|TitleTwo} {-|TitleThree}',
+    'find {-|TitleOne} {-|TitleTwo} {-|TitleThree} {-|TitleFour}'
+  ]
+}, function(req, res) {
+  console.log("++++++++++++++++++Find channel invoked ++++++++++");
+  var title = req.slot("TitleOne");
+  var message = "";
+  console.log("++++ radio channel first token :" + title);
 
-    res.audioPlayerPlayStream("REPLACE_ALL", stream);
-    res.shouldEndSession(true);
-  });
+  if (title) {
+    //capture additional words
+    var TitleTwo = req.slot('TitleTwo') || ' ';
+    var TitleThree = req.slot('TitleThree') || ' ';
+    var TitleFour = req.slot('TitleFour') || ' ';
+    // Concatenate all words in the title provided.
+    title += ' ' + TitleTwo + ' ' + TitleThree + ' ' + TitleFour + ' ';
+    //harcoded for now
+    title = "DC MIX";
+    console.log("+++++ final title :" + title);
+    // Trim trailing comma and whitespace.
+    title = title.replace(/,\s*$/, '');
+
+    var channel = getChannel(title);
+
+    if (!channel.err && channel.link) {
+      message = "Ok. I found your channel " + title +
+        " .Please say play to play the channel";
+      var streamUrl = "https://amazingworkproxy.herokuapp.com/?fpath=" +
+        channel.link;
+      var stream = {
+        url: streamUrl,
+        token: "SOME_RANDOM_STRING",
+        offsetInMilliseconds: 0
+      };
+      //  res.audioPlayerPlayStream("REPLACE_ALL", stream);
+      res.session("searchedChannel", stream);
+
+    } else {
+      message = "Sorry ,I am not able to find your channel";
+    }
+  } else {
+    message =
+      "What would you like to listen ? Please say find ,followed by the radio channel name";
+  }
+
+  res.say(message).shouldEndSession(false);
+});
+
 
 app.audioPlayer("PlaybackStarted", function(req, res) {
   console.log("+++++play back started called ");
@@ -122,76 +116,6 @@ app.audioPlayer("PlaybackFailed", function(req, res) {
 
 });
 
-
-
-app.intent("findSong", {
-  'slots': {
-    'TitleOne': 'TITLE',
-    'TitleTwo': 'TITLE',
-    'TitleThree': 'TITLE',
-    'TitleFour': 'TITLE'
-  },
-  'utterances': ['find {-|TitleOne}',
-    'find  {-|TitleOne} {-|TitleTwo}',
-    'find {-|TitleOne} {-|TitleTwo} {-|TitleThree}',
-    'find {-|TitleOne} {-|TitleTwo} {-|TitleThree} {-|TitleFour}'
-  ]
-}, function(req, res) {
-  console.log("++++++++++++++++++Play song invoked ++++++++++");
-  var title = req.slot("TitleOne");
-  var message = "";
-  console.log("++++ song first token :" + title);
-
-  if (title) {
-    //capture additional words
-    var TitleTwo = req.slot('TitleTwo') || ' ';
-    var TitleThree = req.slot('TitleThree') || ' ';
-    var TitleFour = req.slot('TitleFour') || ' ';
-
-    // Concatenate all words in the title provided.
-    title += ' ' + TitleTwo + ' ' + TitleThree + ' ' + TitleFour + ' ';
-    //harcoded for now
-    title = "humma humma";
-    console.log("+++++ final title :" + title);
-    // Trim trailing comma and whitespace.
-    title = title.replace(/,\s*$/, '');
-
-    console.log("++++++cached object return" + cachedSongs);
-    var song = cachedSongs[title];
-    console.log("+++ song is :" + song);
-
-    if (song === undefined) {
-      console.log("++++++Fetching the song from backend");
-      song = getStreamFromMp3Fun(title);
-      cachedSongs[title] = song;
-
-    }
-    if (!song.err && song.link) {
-      message = "Ok. I found your song " + title +
-        " .Please say play to play the song";
-      var streamUrl = "https://amazingworkproxy.herokuapp.com/?fpath=" +
-        song.link;
-      var stream = {
-        url: streamUrl.replace("http://", ""),
-        token: "SOME_RANDOM_STRING",
-        offsetInMilliseconds: 0
-      };
-      //  res.audioPlayerPlayStream("REPLACE_ALL", stream);
-      res.session("searchedSong", stream);
-
-    } else {
-      message = "Sorry ,I am not able to find your song";
-    }
-  } else {
-    message =
-      "What would you like to listen ? Please say jukebox find , followed by the song name ";
-  }
-
-  res.say(message).shouldEndSession(false);
-});
-
-
-
 app.intent("AMAZON.PauseIntent", {
     "slots": {},
     "utterances": []
@@ -207,7 +131,7 @@ app.intent("AMAZON.ResumeIntent", {
   },
   function(req, res) {
     console.log("++++Resume invoked");
-    var stream = req.session("searchedSong");
+    var stream = req.session("searchedChannel");
     if (!stream) {
       //setting hardCodedStream
       stream = hardCodedStream;
@@ -308,7 +232,7 @@ app.intent("AMAZON.HelpIntent", {
 }, function(req, res) {
   console.log("++++help invoked");
   message =
-    "I can play a song for you .Please say jukebox find  ,followed by song name";
+    "I can play a channel for you .Please say find  ,followed by channel name";
 
   res.say(message).shouldEndSession(false);
 });
