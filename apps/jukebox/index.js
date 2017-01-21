@@ -20,7 +20,7 @@ function getChannel(title) {
   console.log(typeof title);
   console.log("++++++title-xxx +++++" + title);
 
-  var url = map.get(title);
+  var url = map.get("1");
   console.log("+++++url++++" + url);
   if (url) {
     channel.link = url;
