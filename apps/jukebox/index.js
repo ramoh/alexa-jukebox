@@ -1,6 +1,12 @@
 var alexa = require("alexa-app");
 var request = require("request");
 
+var map = new Map();
+
+map.set("1", "173.255.138.90:8137/listen.pls?sid=1");
+map.set("2", "50.7.70.66:8485/listen.pls");
+map.set("3", "50.7.77.115:8174/listen.pls");
+map.set("4", "173.255.138.90:8137/listen.pls?sid=1");
 var channels = {
   "cat": "173.255.138.90:8137/listen.pls?sid=1",
   "dog": "50.7.70.66:8485/listen.pls",
@@ -8,11 +14,12 @@ var channels = {
   "hen": "173.255.138.90:8137/listen.pls?sid=1"
 };
 
+
 function getChannel(title) {
   var channel = {};
   console.log("++++++title-xxx +++++" + title);
 
-  var url = channels[title];
+  var url = map.get(title);
   console.log("+++++url++++" + url);
   if (url) {
     channel.link = url;
