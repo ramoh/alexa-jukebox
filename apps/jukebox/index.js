@@ -17,6 +17,7 @@ var channels = {
 
 function getChannel(title) {
   var channel = {};
+  console.log(typeof title);
   console.log("++++++title-xxx +++++" + title);
 
   var url = map.get(title);
