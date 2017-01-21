@@ -151,7 +151,7 @@ app.intent("findSong", {
     // Concatenate all words in the title provided.
     title += ' ' + TitleTwo + ' ' + TitleThree + ' ' + TitleFour + ' ';
     //harcoded for now
-    title = "humma humma ok jannu";
+    title = "humma humma";
     console.log("+++++ final title :" + title);
     // Trim trailing comma and whitespace.
     title = title.replace(/,\s*$/, '');
