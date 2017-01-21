@@ -3,6 +3,8 @@ var request = require("request");
 
 var channels = {
   "DC MIX": "173.255.138.90:8137/listen.pls?sid=1",
+  "HSL": "50.7.70.66:8485/listen.pls",
+  "BOLLY": "50.7.77.115:8174/listen.pls",
   "DEFAULT": "173.255.138.90:8137/listen.pls?sid=1"
 };
 
@@ -65,7 +67,7 @@ app.intent("findChannel", {
     // Concatenate all words in the title provided.
     title += ' ' + TitleTwo + ' ' + TitleThree + ' ' + TitleFour + ' ';
     //harcoded for now
-    title = "DC MIX";
+    //  title = "DC MIX";
     console.log("+++++ final title :" + title);
     // Trim trailing comma and whitespace.
     title = title.replace(/,\s*$/, '');
