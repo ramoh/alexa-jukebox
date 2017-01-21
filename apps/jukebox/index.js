@@ -10,6 +10,7 @@ var googleSearch = new GoogleSearch({
 
 //http://173.255.138.90:8137/listen.pls?sid=1
 
+
 var hardCodedStream = {
   url: "https://amazingworkproxy.herokuapp.com/?fpath=http://173.255.138.90:8137/listen.pls?sid=1",
   token: "SOME_RANDOM_STRING",
@@ -79,6 +80,7 @@ app.launch(function(req, res) {
   res.reprompt("Please say jukebox find ,followed by the song name");
 
   res.shouldEndSession(false);
+
 });
 
 app.intent("playSong", {
@@ -88,8 +90,13 @@ app.intent("playSong", {
   function(req, res) {
     console.log("++++play song called called");
     var stream = req.session("searchedSong");
+    if (!stream) {
+      //setting hardCodedStream
+      stream = hardCodedStream;
+    }
     console.log("++++straming to play++++" + stream);
     res.say("Playing humma humma song");
+
     res.audioPlayerPlayStream("REPLACE_ALL", stream);
     res.shouldEndSession(true);
   });
