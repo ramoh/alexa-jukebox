@@ -94,7 +94,8 @@ app.intent("playSong", {
       //setting hardCodedStream
       stream = hardCodedStream;
     }
-    console.log("++++straming to play++++" + stream);
+    console.log("++++straming to play++++");
+    console.log(stream);
     res.say("Playing humma humma song");
 
     res.audioPlayerPlayStream("REPLACE_ALL", stream);
