@@ -2,10 +2,10 @@ var alexa = require("alexa-app");
 var request = require("request");
 
 var channels = {
-  "1": "173.255.138.90:8137/listen.pls?sid=1",
-  "2": "50.7.70.66:8485/listen.pls",
-  "3": "50.7.77.115:8174/listen.pls",
-  "4": "173.255.138.90:8137/listen.pls?sid=1"
+  1: "173.255.138.90:8137/listen.pls?sid=1",
+  2: "50.7.70.66:8485/listen.pls",
+  3: "50.7.77.115:8174/listen.pls",
+  4: "173.255.138.90:8137/listen.pls?sid=1"
 };
 
 function getChannel(title) {
