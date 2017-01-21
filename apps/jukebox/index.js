@@ -172,13 +172,13 @@ app.intent("findSong", {
       var streamUrl = "https://amazingworkproxy.herokuapp.com/?fpath=" +
         song.link;
       var stream = {
-        url: streamUrl,
+        url: streamUrl.replace("http://", ""),
         token: "SOME_RANDOM_STRING",
         expectedPreviousToken: "PREVIOUS_TOKEN",
         offsetInMilliseconds: 0
       };
       //  res.audioPlayerPlayStream("REPLACE_ALL", stream);
-      res.session("searchedSong", hardCodedStream);
+      res.session("searchedSong", stream);
 
     } else {
       message = "Sorry ,I am not able to find your song";
