@@ -8,8 +8,8 @@ var channels = {
 
 function getChannel(title) {
   var channel = {};
-  console.log("++++++title +++++" + title);
-  var url = channels.title;
+  console.log("++++++title-xxx +++++" + title);
+  var url = channels[title];
   console.log("+++++url++++" + url);
   if (url) {
     channel.link = url;
