@@ -8,6 +8,15 @@ var googleSearch = new GoogleSearch({
   cx: '008044490165455818569:moplxs3eswg'
 });
 
+//http://173.255.138.90:8137/listen.pls?sid=1
+
+var hardCodedStream = {
+  url: "https://amazingworkproxy.herokuapp.com/?fpath=http://173.255.138.90:8137/listen.pls?sid=1",
+  token: "SOME_RANDOM_STRING",
+  expectedPreviousToken: "PREVIOUS_TOKEN",
+  offsetInMilliseconds: 0
+};
+
 var cachedSongs = {};
 
 // search mp3forfun for the song and return the result
@@ -162,7 +171,7 @@ app.intent("findSong", {
         offsetInMilliseconds: 0
       };
       //  res.audioPlayerPlayStream("REPLACE_ALL", stream);
-      res.session("searchedSong", stream);
+      res.session("searchedSong", hardCodedStream);
 
     } else {
       message = "Sorry ,I am not able to find your song";
