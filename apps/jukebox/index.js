@@ -174,7 +174,6 @@ app.intent("findSong", {
       var stream = {
         url: streamUrl.replace("http://", ""),
         token: "SOME_RANDOM_STRING",
-        expectedPreviousToken: "PREVIOUS_TOKEN",
         offsetInMilliseconds: 0
       };
       //  res.audioPlayerPlayStream("REPLACE_ALL", stream);
