@@ -124,7 +124,7 @@ app.intent("AMAZON.PauseIntent", {
   },
   function(req, res) {
     console.log("++++Pause invoked");
-    res.say('Puase from jukebox!').shouldEndSession(false);
+    res.say('Puase from jukebox!').shouldEndSession(true);
   });
 
 app.intent("AMAZON.ResumeIntent", {
@@ -143,7 +143,7 @@ app.intent("AMAZON.ResumeIntent", {
 
 
     res.audioPlayerPlayStream("REPLACE_ALL", stream);
-    res.say('Resume from jukebox!').shouldEndSession(false);
+    res.say('Playing your channel !').shouldEndSession(true);
   });
 
 app.intent("AMAZON.CancelIntent", {
@@ -152,7 +152,7 @@ app.intent("AMAZON.CancelIntent", {
   },
   function(req, res) {
     console.log("++++cancel invoked");
-    response.audioPlayerStop();
+    res.audioPlayerStop();
     res.say('Goodbye from jukebox!').shouldEndSession(true);
   });
 
