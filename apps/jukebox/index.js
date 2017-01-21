@@ -1,6 +1,4 @@
 var alexa = require("alexa-app");
-//var chatskills = require("chatskills");
-//var readLineSync = require("readline-sync");
 var request = require("request");
 var deasync = require("deasync");
 var cheerio = require("cheerio");
@@ -84,6 +82,7 @@ app.intent("playSong", {
     console.log("++++straming to play++++" + stream);
     res.say("Playing humma humma song");
     res.audioPlayerPlayStream("REPLACE_ALL", stream);
+    res.shouldEndSession(false);
   });
 
 
@@ -255,8 +254,6 @@ app.intent("AMAZON.StartOverIntent", {
     res.say(' StartOverIntent from jukebox!').shouldEndSession(false);
   });
 
-
-
 app.intent("AMAZON.HelpIntent", {
   "slots": {},
   "utterances": []
@@ -276,22 +273,4 @@ app.intent('AMAZON.StopIntent', {
   res.say('Goodbye from jukebox!').shouldEndSession(true);
 });
 
-
-
 module.exports = app;
-/*
-chatskills.launch(app);
-
-console.log(app.utterances());
-// Console client.
-
-var text = ' ';
-while (text.length > 0 && text != 'quit') {
-  text = readLineSync.question('> ');
-
-  // Respond to input.
-  chatskills.respond(text, function(response) {
-    console.log(response);
-  });
-}
-*/
