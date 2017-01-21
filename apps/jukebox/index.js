@@ -174,6 +174,15 @@ app.intent("AMAZON.ResumeIntent", {
     res.say('Resume from jukebox!').shouldEndSession(false);
   });
 
+app.intent("AMAZON.CancelIntent", {
+    "slots": {},
+    "utterances": ['{quit|exit|thanks|bye|enough}']
+  },
+  function(req, res) {
+    console.log("++++cancel invoked");
+    res.say('Goodbye from jukebox!').shouldEndSession(true);
+  });
+
 app.intent("AMAZON.LoopOffIntent", {
     "slots": {},
     "utterances": []
@@ -183,15 +192,70 @@ app.intent("AMAZON.LoopOffIntent", {
     res.say('Loop of from jukebox!').shouldEndSession(false);
   });
 
-
-app.intent("AMAZON.CancelIntent", {
+app.intent("AMAZON.LoopOnIntent", {
     "slots": {},
-    "utterances": ['{quit|exit|thanks|bye|enough}']
+    "utterances": []
   },
   function(req, res) {
-    console.log("++++cancel invoked");
-    res.say('Goodbye from jukebox!').shouldEndSession(true);
+    console.log("++++Loop on invoked");
+    res.say('Loop on from jukebox!').shouldEndSession(false);
   });
+
+app.intent("AMAZON.NextIntent", {
+    "slots": {},
+    "utterances": []
+  },
+  function(req, res) {
+    console.log("++++Loop next invoked");
+    res.say(' next from jukebox!').shouldEndSession(false);
+  });
+
+app.intent("AMAZON.PreviousIntent", {
+    "slots": {},
+    "utterances": []
+  },
+  function(req, res) {
+    console.log("++++Loop previous invoked");
+    res.say(' previous from jukebox!').shouldEndSession(false);
+  });
+
+app.intent("AMAZON.RepeatIntent", {
+    "slots": {},
+    "utterances": []
+  },
+  function(req, res) {
+    console.log("++++RepeatIntent invoked");
+    res.say(' RepeatIntent from jukebox!').shouldEndSession(false);
+  });
+
+app.intent("AMAZON.ShuffleOffIntent", {
+    "slots": {},
+    "utterances": []
+  },
+  function(req, res) {
+    console.log("++++ShuffleOffIntent invoked");
+    res.say(' ShuffleOffIntent from jukebox!').shouldEndSession(false);
+  });
+
+app.intent("AMAZON.ShuffleOnIntent", {
+    "slots": {},
+    "utterances": []
+  },
+  function(req, res) {
+    console.log("++++ShuffleOnIntent invoked");
+    res.say(' ShuffleOnIntent from jukebox!').shouldEndSession(false);
+  });
+
+app.intent("AMAZON.StartOverIntent", {
+    "slots": {},
+    "utterances": []
+  },
+  function(req, res) {
+    console.log("++++StartOverIntent invoked");
+    res.say(' StartOverIntent from jukebox!').shouldEndSession(false);
+  });
+
+
 
 app.intent("AMAZON.HelpIntent", {
   "slots": {},
