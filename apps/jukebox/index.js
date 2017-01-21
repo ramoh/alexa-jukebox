@@ -77,13 +77,35 @@ app.intent("playSong", {
     'utterances': ['play ']
   },
   function(req, res) {
-    console.log("++++play called");
+    console.log("++++play song called called");
     var stream = req.session("searchedSong");
     console.log("++++straming to play++++" + stream);
     res.say("Playing humma humma song");
     res.audioPlayerPlayStream("REPLACE_ALL", stream);
-    res.shouldEndSession(false);
+    res.shouldEndSession(true);
   });
+
+app.audioPlayer("PlaybackStarted", function(req, res) {
+  console.log("+++++play back started called ");
+
+});
+app.audioPlayer("PlaybackFinished", function(req, res) {
+  console.log("+++++play back finsihed called ");
+
+});
+app.audioPlayer("PlaybackStopped", function(req, res) {
+  console.log("+++++play back stopped called ");
+
+});
+app.audioPlayer("PlaybackNearlyFinished", function(req, res) {
+  console.log("+++++play back nearly finised called ");
+
+});
+app.audioPlayer("PlaybackFailed", function(req, res) {
+  console.log("+++++play back failed called ");
+
+});
+
 
 
 app.intent("findSong", {
