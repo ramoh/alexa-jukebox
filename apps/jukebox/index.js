@@ -90,7 +90,8 @@ app.intent("findChannel", {
     console.log("+++++ final title :" + title);
     // Trim trailing comma and whitespace.
     console.log("Before stripping " + title.length);
-    title = title.replace(/,\s*$/, '');
+    //  title = title.replace(/,\s*$/, '');
+    title = title.trim();
     console.log("After stripping " + title.length);
 
     var channel = getChannel(title);
