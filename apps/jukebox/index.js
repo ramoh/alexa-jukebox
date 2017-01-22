@@ -20,16 +20,19 @@ function getChannel(title) {
   console.log(typeof title);
   console.log("++++++title-xxx +++++" + title);
 
-  var url = map.get("1");
+  var url = map.get(title);
   console.log("+++++url++++" + url);
   if (url) {
     channel.link = url;
   } else {
     channel.err = true;
   }
-
   return channel;
 }
+
+console.log("+++++getting name ");
+var url = getChannel("3");
+console.log(url);
 
 var hardCodedStream = {
   url: "https://amazingworkproxy.herokuapp.com/?fpath=173.255.138.90:8137/listen.pls?sid=1",
