@@ -21,9 +21,10 @@ function getChannel(title) {
   console.log("++++++title-xxx +++++" + title);
 
   if (title == "1") {
-    console.log("++++++I am one ");
+
+    console.log("++++++I am one " + titile.length);
   } else {
-    console.log("++++++I am NOT one ");
+    console.log("++++++I am NOT one " + titile.length);
   }
 
   var url = map.get(title);
