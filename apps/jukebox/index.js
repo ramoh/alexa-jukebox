@@ -80,9 +80,9 @@ app.intent("findChannel", {
 
   if (title) {
     //capture additional words
-    var TitleTwo = req.slot('TitleTwo') || ' ';
-    var TitleThree = req.slot('TitleThree') || ' ';
-    var TitleFour = req.slot('TitleFour') || ' ';
+    var TitleTwo = req.slot('TitleTwo') || '';
+    var TitleThree = req.slot('TitleThree') || '';
+    var TitleFour = req.slot('TitleFour') || '';
     // Concatenate all words in the title provided.
     title += ' ' + TitleTwo + ' ' + TitleThree + ' ' + TitleFour + ' ';
     //harcoded for now
