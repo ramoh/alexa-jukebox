@@ -1,155 +1,67 @@
 var alexa = require("alexa-app");
 var request = require("request");
+var DoublyLinkedList = require("./ds").DoublyLinkedList;
 
-var map = new Map();
-map.set("1", "173.255.138.90:8137/listen.pls?sid=1");
-map.set("2", "50.7.70.66:8485/listen.pls");
-map.set("3", "50.7.77.115:8174/listen.pls");
-map.set("4", "173.255.138.90:8137/listen.pls?sid=1");
+//add all radio channels
+var dll = new DoublyLinkedList();
+dll.add({
+  url: "173.255.138.90:8137/listen.pls?sid=1",
+  name: "Channel 1"
+});
+dll.add({
+  url: "50.7.70.66:8485/listen.pls",
+  name: "Channel 2"
+});
+dll.add({
+  url: "50.7.77.115:8174/listen.pls",
+  name: "Channel 3"
+});
 
+var currentChannel = dll.head;
 
-function getChannel(title) {
-  var channel = {};
-  var url = map.get(title);
-  console.log("+++++url++++" + url);
-  if (url) {
-    channel.link = url;
-  } else {
-    channel.err = true;
-  }
-  return channel;
-}
+console.log(dll.head);
 
-var hardCodedStream = {
-  url: "https://amazingworkproxy.herokuapp.com/?fpath=173.255.138.90:8137/listen.pls?sid=1",
-  token: "903243243b3423432423",
+var stream = {
+  url: currentChannel.data.url,
+  token: "SOME_RANDOM_STRING",
   offsetInMilliseconds: 0
 };
 
 //var app = chatskills.app("jukebox");
 var app = new alexa.app("jukebox");
 
-
 app.launch(function(req, res) {
   res.say(
-    "Welcome to jukebox. What would you like to listen ? Please say find ,followed by the radio channel name"
+    "Welcome to jukebox. Say next to move to next Channel .Say previous to move to previous channel"
   );
-  res.reprompt("Please say find ,followed by the radio channel name");
+  res.say("Playing channel" + currentChannel.data.name);
+  res.audioPlayerPlayStream("REPLACE_ALL", stream);
   res.shouldEndSession(false);
-
 });
 
-app.intent("findChannel", {
-  'slots': {
-    'TitleOne': 'TITLE',
-    'TitleTwo': 'TITLE',
-    'TitleThree': 'TITLE',
-    'TitleFour': 'TITLE'
-  },
-  'utterances': ['find {-|TitleOne}',
-    'find  {-|TitleOne} {-|TitleTwo}',
-    'find {-|TitleOne} {-|TitleTwo} {-|TitleThree}',
-    'find {-|TitleOne} {-|TitleTwo} {-|TitleThree} {-|TitleFour}'
-  ]
-}, function(req, res) {
-  console.log("++++++++++++++++++Find channel invoked ++++++++++");
-  var title = req.slot("TitleOne");
-  var message = "";
-  if (title) {
-    //capture additional words
-    var TitleTwo = req.slot('TitleTwo') || '';
-    var TitleThree = req.slot('TitleThree') || '';
-    var TitleFour = req.slot('TitleFour') || '';
-    // Concatenate all words in the title provided.
-    title += ' ' + TitleTwo + ' ' + TitleThree + ' ' + TitleFour + ' ';
-    //harcoded for now
-    //  title = "DC MIX";
-    console.log("+++++ final title :" + title);
-    // Trim trailing comma and whitespace.
-    console.log("Before stripping " + title.length);
-    //  title = title.replace(/,\s*$/, '');
-    title = title.trim();
-    console.log("After stripping " + title.length);
-
-    var channel = getChannel(title);
-
-    if (!channel.err && channel.link) {
-      message = "Ok. I found your channel " + title +
-        " .Please say play to play the channel";
-      var streamUrl = "https://amazingworkproxy.herokuapp.com/?fpath=" +
-        channel.link;
-      var stream = {
-        url: streamUrl,
-        token: "SOME_RANDOM_STRING",
-        offsetInMilliseconds: 0
-      };
-      //  res.audioPlayerPlayStream("REPLACE_ALL", stream);
-      res.session("searchedChannel", stream);
-
-    } else {
-      message = "Sorry ,I am not able to find your channel";
-    }
-  } else {
-    message =
-      "What would you like to listen ? Please say find ,followed by the radio channel name";
-  }
-
-  res.say(message).shouldEndSession(false);
-});
-
-
-app.audioPlayer("PlaybackStarted", function(req, res) {
-  console.log("+++++play back started called ");
-
-});
-app.audioPlayer("PlaybackFinished", function(req, res) {
-  console.log("+++++play back finsihed called ");
-
-});
-app.audioPlayer("PlaybackStopped", function(req, res) {
-  console.log("+++++play back stopped called ");
-
-});
-app.audioPlayer("PlaybackNearlyFinished", function(req, res) {
-  console.log("+++++play back nearly finised called ");
-
-});
-app.audioPlayer("PlaybackFailed", function(req, res) {
-  console.log("+++++play back failed called ");
-
-});
 
 app.intent("AMAZON.PauseIntent", {
-    "slots": {},
-    "utterances": []
+    'slots': {},
+    'utterances': ['Pause']
   },
   function(req, res) {
     console.log("++++Pause invoked");
-    res.say('Puase from jukebox!').shouldEndSession(true);
+    res.say('Pause from jukebox!').shouldEndSession(true);
   });
 
 app.intent("AMAZON.ResumeIntent", {
-    "slots": {},
-    "utterances": []
+    'slots': {},
+    'utterances': ['Resume']
   },
   function(req, res) {
     console.log("++++Resume invoked");
-    var stream = req.session("searchedChannel");
-    if (!stream) {
-      //setting hardCodedStream
-      stream = hardCodedStream;
-    }
-    console.log("++++straming to play++++");
-    console.log(stream);
-
-
     res.audioPlayerPlayStream("REPLACE_ALL", stream);
     res.say('Playing your channel !').shouldEndSession(true);
   });
 
 app.intent("AMAZON.CancelIntent", {
-    "slots": {},
-    "utterances": ['{quit|exit|thanks|bye|enough}']
+    'slots': {},
+    'utterances': ['{quit|exit|thanks|bye|enough|stop}']
   },
   function(req, res) {
     console.log("++++cancel invoked");
@@ -176,21 +88,35 @@ app.intent("AMAZON.LoopOnIntent", {
   });
 
 app.intent("AMAZON.NextIntent", {
-    "slots": {},
-    "utterances": []
+    'slots': {},
+    'utterances': ['next']
   },
   function(req, res) {
-    console.log("++++Loop next invoked");
-    res.say(' next from jukebox!').shouldEndSession(false);
+    console.log("++++ next invoked");
+    if (currentChannel.next) {
+      currentChannel = currentChannel.next;
+      stream.url = currentChannel.data.url;
+      res.audioPlayerPlayStream("REPLACE_ALL", stream);
+      res.say("playing next channel").shouldEndSession(false);
+    } else {
+      res.say('There is no next channel').shouldEndSession(false);
+    }
   });
 
 app.intent("AMAZON.PreviousIntent", {
-    "slots": {},
-    "utterances": []
+    'slots': {},
+    'utterances': ['previous']
   },
   function(req, res) {
-    console.log("++++Loop previous invoked");
-    res.say(' previous from jukebox!').shouldEndSession(false);
+    console.log("++++ previous invoked");
+    if (currentChannel.previous) {
+      currentChannel = currentChannel.previous;
+      stream.url = currentChannel.data.url;
+      res.audioPlayerPlayStream("REPLACE_ALL", stream);
+      res.say("playing next channel").shouldEndSession(false);
+    } else {
+      res.say('There is no next channel').shouldEndSession(false);
+    }
   });
 
 app.intent("AMAZON.RepeatIntent", {
@@ -230,13 +156,12 @@ app.intent("AMAZON.StartOverIntent", {
   });
 
 app.intent("AMAZON.HelpIntent", {
-  "slots": {},
-  "utterances": []
+  'slots': {},
+  'utterances': []
 }, function(req, res) {
   console.log("++++help invoked");
   message =
-    "I can play a channel for you .Please say find  ,followed by channel name";
-
+    "I can play a channel for you .";
   res.say(message).shouldEndSession(false);
 });
 
@@ -246,6 +171,28 @@ app.intent('AMAZON.StopIntent', {
 }, function(req, res) {
   console.log("++++stop invoked");
   res.say('Goodbye from jukebox!').shouldEndSession(true);
+});
+
+
+app.audioPlayer("PlaybackStarted", function(req, res) {
+  console.log("+++++play back started called ");
+
+});
+app.audioPlayer("PlaybackFinished", function(req, res) {
+  console.log("+++++play back finsihed called ");
+
+});
+app.audioPlayer("PlaybackStopped", function(req, res) {
+  console.log("+++++play back stopped called ");
+
+});
+app.audioPlayer("PlaybackNearlyFinished", function(req, res) {
+  console.log("+++++play back nearly finised called ");
+
+});
+app.audioPlayer("PlaybackFailed", function(req, res) {
+  console.log("+++++play back failed called ");
+
 });
 
 module.exports = app;
