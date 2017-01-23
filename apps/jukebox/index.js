@@ -17,7 +17,7 @@ dll.add({
   name: "Channel 3"
 });
 
-var currentChannel = dll.head;
+var currentChannel;
 
 console.log(dll.head);
 
@@ -34,6 +34,7 @@ app.launch(function(req, res) {
   res.say(
     "Welcome to jukebox. Say next to move to next Channel .Say previous to move to previous channel"
   );
+  currentChannel = dll.head;
   res.say("Playing channel" + currentChannel.data.name);
   res.audioPlayerPlayStream("REPLACE_ALL", stream);
   res.shouldEndSession(false);
@@ -42,7 +43,7 @@ app.launch(function(req, res) {
 
 app.intent("AMAZON.PauseIntent", {
     'slots': {},
-    'utterances': ['Pause']
+    'utterances': []
   },
   function(req, res) {
     console.log("++++Pause invoked");
@@ -51,7 +52,7 @@ app.intent("AMAZON.PauseIntent", {
 
 app.intent("AMAZON.ResumeIntent", {
     'slots': {},
-    'utterances': ['Resume']
+    'utterances': []
   },
   function(req, res) {
     console.log("++++Resume invoked");
@@ -89,7 +90,7 @@ app.intent("AMAZON.LoopOnIntent", {
 
 app.intent("AMAZON.NextIntent", {
     'slots': {},
-    'utterances': ['next']
+    'utterances': []
   },
   function(req, res) {
     console.log("++++ next invoked");
@@ -105,7 +106,7 @@ app.intent("AMAZON.NextIntent", {
 
 app.intent("AMAZON.PreviousIntent", {
     'slots': {},
-    'utterances': ['previous']
+    'utterances': []
   },
   function(req, res) {
     console.log("++++ previous invoked");
