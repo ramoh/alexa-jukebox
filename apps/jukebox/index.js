@@ -33,8 +33,8 @@ app.launch(function(req, res) {
     "Welcome to jukebox. Say next to move to next Channel .Say previous to move to previous channel"
   );
   currentChannel = dll.head;
-  res.say("Playing channel " + currentChannel.data.name);
-  res.audioPlayerPlayStream("REPLACE_ALL", stream);
+  //res.say("Playing channel " + currentChannel.data.name);
+  //res.audioPlayerPlayStream("REPLACE_ALL", stream);
   res.shouldEndSession(false);
 });
 
