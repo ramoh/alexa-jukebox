@@ -19,10 +19,8 @@ dll.add({
 
 var currentChannel;
 
-console.log(dll.head);
-
 var stream = {
-  url: currentChannel.data.url,
+  url: "",
   token: "SOME_RANDOM_STRING",
   offsetInMilliseconds: 0
 };
@@ -35,7 +33,7 @@ app.launch(function(req, res) {
     "Welcome to jukebox. Say next to move to next Channel .Say previous to move to previous channel"
   );
   currentChannel = dll.head;
-  res.say("Playing channel" + currentChannel.data.name);
+  res.say("Playing channel " + currentChannel.data.name);
   res.audioPlayerPlayStream("REPLACE_ALL", stream);
   res.shouldEndSession(false);
 });
@@ -98,7 +96,7 @@ app.intent("AMAZON.NextIntent", {
       currentChannel = currentChannel.next;
       stream.url = currentChannel.data.url;
       res.audioPlayerPlayStream("REPLACE_ALL", stream);
-      res.say("playing next channel").shouldEndSession(false);
+      res.say("playing next channel " + currentChannel.data.name).shouldEndSession(false);
     } else {
       res.say('There is no next channel').shouldEndSession(false);
     }
@@ -114,7 +112,7 @@ app.intent("AMAZON.PreviousIntent", {
       currentChannel = currentChannel.previous;
       stream.url = currentChannel.data.url;
       res.audioPlayerPlayStream("REPLACE_ALL", stream);
-      res.say("playing next channel").shouldEndSession(false);
+      res.say("playing next channel " + currentChannel.data.name).shouldEndSession(false);
     } else {
       res.say('There is no next channel').shouldEndSession(false);
     }
