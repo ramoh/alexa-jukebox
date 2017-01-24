@@ -30,13 +30,13 @@ var app = new alexa.app("jukebox");
 
 app.launch(function(req, res) {
   res.say(
-    "Welcome to jukebox. Say next to move to next Channel .Say previous to move to previous channel"
+    "Welcome to jukebox. Say next to move to next Channel .Say previous to move to previous channel.Say Play to start playing"
   );
   currentChannel = dll.head;
   stream.url = currentChannel.data.url;
-  res.say("Playing channel " + currentChannel.data.name);
-  res.audioPlayerPlayStream("REPLACE_ALL", stream);
-  res.shouldEndSession(true);
+  //  res.say("Playing channel " + currentChannel.data.name);
+  //  res.audioPlayerPlayStream("REPLACE_ALL", stream);
+  res.shouldEndSession(false);
 });
 
 
