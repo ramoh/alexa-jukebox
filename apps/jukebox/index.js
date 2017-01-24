@@ -30,7 +30,7 @@ var app = new alexa.app("jukebox");
 
 app.launch(function(req, res) {
   res.say(
-    "Welcome to jukebox. Say next to move to next Channel .Say previous to move to previous channel.Say Play to start playing"
+    "Welcome to jukebox. Say next to move to next Channel .Say previous to move to previous channel. Say Play to start playing"
   );
   currentChannel = dll.head;
   stream.url = currentChannel.data.url;
@@ -56,9 +56,12 @@ app.intent("AMAZON.ResumeIntent", {
   },
   function(req, res) {
     console.log("++++Resume invoked");
+
+    currentChannel = dll.head;
+    stream.url = currentChannel.data.url;
     console.log(stream);
     res.audioPlayerPlayStream("REPLACE_ALL", stream);
-    res.say('Playing your channel !').shouldEndSession(true);
+    res.say("playing channel " + currentChannel.data.name).shouldEndSession(true);
   });
 
 app.intent("AMAZON.CancelIntent", {
@@ -67,6 +70,7 @@ app.intent("AMAZON.CancelIntent", {
   },
   function(req, res) {
     console.log("++++cancel invoked");
+
     res.audioPlayerStop();
     res.say('Goodbye from jukebox!').shouldEndSession(true);
   });
