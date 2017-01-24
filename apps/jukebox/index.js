@@ -36,7 +36,7 @@ app.launch(function(req, res) {
   stream.url = currentChannel.data.url;
   res.say("Playing channel " + currentChannel.data.name);
   res.audioPlayerPlayStream("REPLACE_ALL", stream);
-  res.shouldEndSession(false);
+  res.shouldEndSession(true);
 });
 
 
@@ -76,7 +76,7 @@ app.intent("AMAZON.LoopOffIntent", {
   },
   function(req, res) {
     console.log("++++Loop of invoked");
-    res.say('Loop of from jukebox!').shouldEndSession(false);
+    res.say('Loop of from jukebox!').shouldEndSession(true);
   });
 
 app.intent("AMAZON.LoopOnIntent", {
@@ -85,7 +85,7 @@ app.intent("AMAZON.LoopOnIntent", {
   },
   function(req, res) {
     console.log("++++Loop on invoked");
-    res.say('Loop on from jukebox!').shouldEndSession(false);
+    res.say('Loop on from jukebox!').shouldEndSession(true);
   });
 
 app.intent("AMAZON.NextIntent", {
@@ -99,9 +99,9 @@ app.intent("AMAZON.NextIntent", {
       stream.url = currentChannel.data.url;
       console.log(stream);
       res.audioPlayerPlayStream("REPLACE_ALL", stream);
-      res.say("playing next channel " + currentChannel.data.name).shouldEndSession(false);
+      res.say("playing next channel " + currentChannel.data.name).shouldEndSession(true);
     } else {
-      res.say('There is no next channel').shouldEndSession(false);
+      res.say('There is no next channel').shouldEndSession(true);
     }
   });
 
@@ -118,7 +118,7 @@ app.intent("AMAZON.PreviousIntent", {
       res.audioPlayerPlayStream("REPLACE_ALL", stream);
       res.say("playing next channel " + currentChannel.data.name).shouldEndSession(false);
     } else {
-      res.say('There is no next channel').shouldEndSession(false);
+      res.say('There is no previous channel').shouldEndSession(false);
     }
   });
 
@@ -155,7 +155,7 @@ app.intent("AMAZON.StartOverIntent", {
   },
   function(req, res) {
     console.log("++++StartOverIntent invoked");
-    res.say(' StartOverIntent from jukebox!').shouldEndSession(false);
+    res.say(' StartOverIntent from jukebox!').shouldEndSession(true);
   });
 
 app.intent("AMAZON.HelpIntent", {
@@ -165,7 +165,7 @@ app.intent("AMAZON.HelpIntent", {
   console.log("++++help invoked");
   message =
     "I can play a channel for you .";
-  res.say(message).shouldEndSession(false);
+  res.say(message).shouldEndSession(true);
 });
 
 app.intent('AMAZON.StopIntent', {
