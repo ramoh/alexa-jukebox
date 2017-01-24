@@ -5,15 +5,15 @@ var DoublyLinkedList = require("./ds").DoublyLinkedList;
 //add all radio channels
 var dll = new DoublyLinkedList();
 dll.add({
-  url: "173.255.138.90:8137/listen.pls?sid=1",
+  url: "https://amazingworkproxy.herokuapp.com/?fpath=173.255.138.90:8137/listen.pls?sid=1",
   name: "Channel 1"
 });
 dll.add({
-  url: "50.7.70.66:8485/listen.pls",
+  url: "https://amazingworkproxy.herokuapp.com/?fpath=50.7.70.66:8485/listen.pls",
   name: "Channel 2"
 });
 dll.add({
-  url: "50.7.77.115:8174/listen.pls",
+  url: "https://amazingworkproxy.herokuapp.com/?fpath=50.7.77.115:8174/listen.pls",
   name: "Channel 3"
 });
 
