@@ -46,6 +46,7 @@ app.intent("AMAZON.PauseIntent", {
   },
   function(req, res) {
     console.log("++++Pause invoked");
+    res.audioPlayerStop();
     res.say('Pause from jukebox!').shouldEndSession(true);
   });
 
@@ -173,6 +174,7 @@ app.intent('AMAZON.StopIntent', {
   'utterances': ['{quit|exit|thanks|bye|thank you}']
 }, function(req, res) {
   console.log("++++stop invoked");
+  res.audioPlayerStop();
   res.say('Goodbye from jukebox!').shouldEndSession(true);
 });
 
