@@ -55,6 +55,7 @@ app.intent("AMAZON.ResumeIntent", {
   },
   function(req, res) {
     console.log("++++Resume invoked");
+    console.log(stream);
     res.audioPlayerPlayStream("REPLACE_ALL", stream);
     res.say('Playing your channel !').shouldEndSession(true);
   });
@@ -96,6 +97,7 @@ app.intent("AMAZON.NextIntent", {
     if (currentChannel.next) {
       currentChannel = currentChannel.next;
       stream.url = currentChannel.data.url;
+      console.log(stream);
       res.audioPlayerPlayStream("REPLACE_ALL", stream);
       res.say("playing next channel " + currentChannel.data.name).shouldEndSession(false);
     } else {
@@ -112,6 +114,7 @@ app.intent("AMAZON.PreviousIntent", {
     if (currentChannel.previous) {
       currentChannel = currentChannel.previous;
       stream.url = currentChannel.data.url;
+      console.log(stream);
       res.audioPlayerPlayStream("REPLACE_ALL", stream);
       res.say("playing next channel " + currentChannel.data.name).shouldEndSession(false);
     } else {
