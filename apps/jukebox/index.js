@@ -117,9 +117,9 @@ app.intent("AMAZON.PreviousIntent", {
       stream.url = currentChannel.data.url;
       console.log(stream);
       res.audioPlayerPlayStream("REPLACE_ALL", stream);
-      res.say("playing next channel " + currentChannel.data.name).shouldEndSession(false);
+      res.say("playing previous channel " + currentChannel.data.name).shouldEndSession(true);
     } else {
-      res.say('There is no previous channel').shouldEndSession(false);
+      res.say('There is no previous channel').shouldEndSession(true);
     }
   });
 
@@ -129,7 +129,7 @@ app.intent("AMAZON.RepeatIntent", {
   },
   function(req, res) {
     console.log("++++RepeatIntent invoked");
-    res.say(' RepeatIntent from jukebox!').shouldEndSession(false);
+    res.say(' RepeatIntent from jukebox!').shouldEndSession(true);
   });
 
 app.intent("AMAZON.ShuffleOffIntent", {
@@ -138,7 +138,7 @@ app.intent("AMAZON.ShuffleOffIntent", {
   },
   function(req, res) {
     console.log("++++ShuffleOffIntent invoked");
-    res.say(' ShuffleOffIntent from jukebox!').shouldEndSession(false);
+    res.say(' ShuffleOffIntent from jukebox!').shouldEndSession(true);
   });
 
 app.intent("AMAZON.ShuffleOnIntent", {
@@ -147,7 +147,7 @@ app.intent("AMAZON.ShuffleOnIntent", {
   },
   function(req, res) {
     console.log("++++ShuffleOnIntent invoked");
-    res.say(' ShuffleOnIntent from jukebox!').shouldEndSession(false);
+    res.say(' ShuffleOnIntent from jukebox!').shouldEndSession(true);
   });
 
 app.intent("AMAZON.StartOverIntent", {
