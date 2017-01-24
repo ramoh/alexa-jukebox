@@ -34,8 +34,8 @@ app.launch(function(req, res) {
   );
   currentChannel = dll.head;
   stream.url = currentChannel.data.url;
-  //res.say("Playing channel " + currentChannel.data.name);
-  //res.audioPlayerPlayStream("REPLACE_ALL", stream);
+  res.say("Playing channel " + currentChannel.data.name);
+  res.audioPlayerPlayStream("REPLACE_ALL", stream);
   res.shouldEndSession(false);
 });
 
