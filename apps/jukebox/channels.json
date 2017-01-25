@@ -1,0 +1,18 @@
+{
+  "channels": [{
+    "url": "http://173.255.138.90:8137/listen.pls?sid=1",
+    "name": "Channel 1"
+  }, {
+    "url": "http://50.7.70.66:8485/listen.pls",
+    "name": "Channel 2"
+  }, {
+    "url": "http://50.7.77.115:8174/listen.pls",
+    "name": "Channel 3"
+  }, {
+    "url": "http://69.4.230.78:9000/listen.pls",
+    "name": "Channel 4"
+  }, {
+    "url": "http://149.56.147.197:8823/listen.pls?sid=1",
+    "name": "Channel 5"
+  }]
+}

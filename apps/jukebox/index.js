@@ -1,24 +1,21 @@
+/*jshint esversion: 6 */
 var alexa = require("alexa-app");
 var request = require("request");
 var DoublyLinkedList = require("./ds").DoublyLinkedList;
-
-//add all radio channels
+var fs = require("fs");
 var dll = new DoublyLinkedList();
-dll.add({
-  url: "https://amazingworkproxy.herokuapp.com/?fpath=173.255.138.90:8137/listen.pls?sid=1",
-  name: "Channel 1"
-});
-dll.add({
-  url: "https://amazingworkproxy.herokuapp.com/?fpath=50.7.70.66:8485/listen.pls",
-  name: "Channel 2"
-});
-dll.add({
-  url: "https://amazingworkproxy.herokuapp.com/?fpath=50.7.77.115:8174/listen.pls",
-  name: "Channel 3"
-});
+
+var channelsJson = JSON.parse(fs.readFileSync("channels.json", "UTF8"));
+for (var ch of channelsJson.channels) {
+  var urll = ch.url.replace("http://", "");
+  dll.add({
+    url: "https://amazingworkproxy.herokuapp.com/?fpath=" + urll,
+    name: ch.name
+  });
+}
 
 var currentChannel;
-
+//stream object place holder
 var stream = {
   url: "",
   token: "SOME_RANDOM_STRING",
