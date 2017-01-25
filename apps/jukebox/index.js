@@ -5,7 +5,7 @@ var DoublyLinkedList = require("./ds").DoublyLinkedList;
 var fs = require("fs");
 var dll = new DoublyLinkedList();
 
-var channelsJson = JSON.parse(fs.readFileSync("./channels.json", "UTF8"));
+var channelsJson = JSON.parse(fs.readFileSync("apps/jukebox/channels.json", "UTF8"));
 for (var ch of channelsJson.channels) {
   var urll = ch.url.replace("http://", "");
   dll.add({
